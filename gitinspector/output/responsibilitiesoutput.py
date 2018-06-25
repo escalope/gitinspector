@@ -52,7 +52,7 @@ class ResponsibilitiesOutput(Outputable):
 					print(str(entry[0]).rjust(6), end=" ")
 					print("...%s" % entry[1][-width+3:] if len(entry[1]) > width else entry[1])
 
-					if j >= 9:
+					if j >= 30:
 						break
 
 	def output_html(self):
@@ -71,13 +71,14 @@ class ResponsibilitiesOutput(Outputable):
 					            i, _(MOSTLY_RESPONSIBLE_FOR_TEXT))
 				else:
 					resp_xml += "<h3>{0} {1}</h3>".format(i, _(MOSTLY_RESPONSIBLE_FOR_TEXT))
-
+				total=0
 				for j, entry in enumerate(responsibilities):
 					resp_xml += "<div" + (" class=\"odd\">" if j % 2 == 1 else ">") + entry[1] + \
 					            " (" + str(entry[0]) + " eloc)</div>"
-					if j >= 9:
+					total=total+entry[0]
+					if j >= 30:
 						break
-
+				resp_xml += "<div>Total:"+str(total)+" eloc</div>"
 				resp_xml += "</div>"
 		resp_xml += "</div></div>"
 		print(resp_xml)
@@ -104,7 +105,7 @@ class ResponsibilitiesOutput(Outputable):
 					resp_json += "\t\t\t\t\t\"rows\": " + str(entry[0]) + "\n"
 					resp_json += "\t\t\t\t},"
 
-					if j >= 9:
+					if j >= 30:
 						break
 
 				resp_json = resp_json[:-1]
@@ -134,7 +135,7 @@ class ResponsibilitiesOutput(Outputable):
 					resp_xml += "\t\t\t\t\t\t<rows>" + str(entry[0]) + "</rows>\n"
 					resp_xml += "\t\t\t\t\t</file>\n"
 
-					if j >= 9:
+					if j >= 30:
 						break
 
 				resp_xml += "\t\t\t\t</files>\n"
